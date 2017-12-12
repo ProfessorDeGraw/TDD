@@ -1,9 +1,8 @@
-import time
 from pyvirtualdisplay import Display
+from django.test import LiveServerTestCase
 from selenium import webdriver
-import unittest
-
 from selenium.webdriver.common.keys import Keys
+import time
 
 
 def take_screen_shot(headless_browser):
@@ -19,7 +18,8 @@ def dump_html(headless_browser):
         f.write(headless_browser.page_source)
 
 
-class NewVisitorTest(unittest.TestCase):
+
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.display = Display(visible=0, size=(1024, 768))
@@ -50,9 +50,11 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn(row_text, [row.text for row in rows])
 
     def test_can_start_a_list_and_retrieve_it_later(self):
+        # TODO(nddegraw) Clean up after FT runs
+
         # Edith has heard about a cool new online to-do app. She goes
         # to check out its homepage
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         take_screen_shot(self.browser)
         dump_html(self.browser)
@@ -98,6 +100,3 @@ class NewVisitorTest(unittest.TestCase):
 
         # Satisfied, she goes back to sleep
 
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
