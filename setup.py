@@ -22,6 +22,7 @@ import setuptools
 try:
     import multiprocessing  # noqa
 except ImportError:
+    import multiprocessing
     pass
 
 setuptools.setup(
