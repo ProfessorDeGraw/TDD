@@ -1,15 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from lists.models import Item
 
 
 # Create your views here.
 def home_page(request):
-    # TODO(nddegraw) going to be saving empty items with every request to the home page
-    # TODO(nddegraw) no way at all of having different lists for different people
-    item = Item()
-    item.text = request.POST.get('item_text', '')
-    item.save()
+    # TODO(nddegraw) Support more than one list!
+    # TODO(nddegraw) Display multiple items in the table
+    if request.method == 'POST':
+        Item.objects.create(text=request.POST['item_text'])
+        return redirect('/')
 
-    return render(request, 'home.html', {
-        'new_item_text': request.POST.get('item_text', ''),
-    })
+    items = Item.objects.all()
+    return render(request, 'home.html', {'items': items})
