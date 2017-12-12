@@ -58,7 +58,7 @@ class NewVisitorTest(unittest.TestCase):
         dump_html(self.browser)
 
         # She notices the page title and header mention to-do lists
-        self.assertIn('To-Do', self.browser.title)
+        self.assertIn('To-Do', self.browser.title, "Is the server running? try:\npython manage.py runserver")
 
         # She is invited to enter a to-do item straight away
         inputbox = self.browser.find_element_by_id('id_new_item')

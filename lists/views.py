@@ -1,9 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from lists.models import Item
 
 
 # Create your views here.
 def home_page(request):
+    # TODO(nddegraw) going to be saving empty items with every request to the home page
+    # TODO(nddegraw) no way at all of having different lists for different people
+    item = Item()
+    item.text = request.POST.get('item_text', '')
+    item.save()
+
     return render(request, 'home.html', {
         'new_item_text': request.POST.get('item_text', ''),
     })
