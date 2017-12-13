@@ -1,5 +1,6 @@
 
-from os.path import basename, dirname
+from os.path import basename, dirname, exists
+from os import makedirs
 from time import sleep
 
 from pyvirtualdisplay import Display
@@ -8,6 +9,9 @@ from selenium.webdriver.common.keys import Keys
 
 
 def build_file_name(file, extension):
+    if not exists(dirname(dirname(file)) + '/screens/'):
+        makedirs(dirname(dirname(file)) + '/screens/')
+
     return dirname(dirname(file)) + '/screens/' + basename(file) + extension
 
 

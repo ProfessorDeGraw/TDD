@@ -1,4 +1,5 @@
-from os.path import basename, dirname
+from os.path import basename, dirname, exists
+from os import makedirs
 
 from pyvirtualdisplay import Display
 from django.test import LiveServerTestCase
@@ -11,6 +12,9 @@ MAX_WAIT = 4
 
 
 def build_file_name(file, extension, number):
+    if not exists(dirname(dirname(file)) + '/screens/'):
+        makedirs(dirname(dirname(file)) + '/screens/')
+
     return dirname(dirname(file)) + '/screens/' + basename(file) + str(number) + extension
 
 
