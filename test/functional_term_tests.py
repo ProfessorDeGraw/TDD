@@ -1,6 +1,5 @@
 
-from os.path import dirname
-from os.path import basename
+from os.path import basename, dirname
 from time import sleep
 
 from pyvirtualdisplay import Display

@@ -1,3 +1,5 @@
+from os.path import basename, dirname
+
 from pyvirtualdisplay import Display
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -8,16 +10,16 @@ import time
 MAX_WAIT = 4
 
 
-def take_screen_shot(headless_browser):
-    filename = __file__ + '.png'
-    print('screen shot saved to', filename)
-    headless_browser.get_screenshot_as_file(filename)
+def build_file_name(file, extension, number):
+    return dirname(dirname(file)) + '/screens/' + basename(file) + str(number) + extension
 
 
-def dump_html(headless_browser):
-    filename = __file__ + '.html'
-    print('dumping page HTML to', filename)
-    with open(filename, 'w') as f:
+def take_screen_shot(headless_browser, number=0):
+    headless_browser.get_screenshot_as_file(build_file_name(__file__, '.png', number))
+
+
+def dump_html(headless_browser, number):
+    with open(build_file_name(__file__, '.html', number), 'w') as f:
         f.write(headless_browser.page_source)
 
 
@@ -66,8 +68,8 @@ class NewVisitorTest(LiveServerTestCase):
         # to check out its homepage
         self.browser.get(self.live_server_url)
 
-        take_screen_shot(self.browser)
-        dump_html(self.browser)
+        take_screen_shot(self.browser, 0)
+        dump_html(self.browser, 0)
 
         # She notices the page title and header mention to-do lists
         self.assertIn('To-Do', self.browser.title, "Is the server running? try:\npython manage.py runserver")
@@ -83,6 +85,9 @@ class NewVisitorTest(LiveServerTestCase):
         # is tying fly-fishing lures)
         inputbox.send_keys('Buy peacock feathers')
 
+        take_screen_shot(self.browser, 1)
+        dump_html(self.browser, 1)
+
         # When she hits enter, the page updates, and now the page lists
         # "1: Buy peacock feathers" as an item in a to-do list
         inputbox.send_keys(Keys.ENTER)
@@ -93,21 +98,39 @@ class NewVisitorTest(LiveServerTestCase):
         # methodical)
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
+
+        take_screen_shot(self.browser, 2)
+        dump_html(self.browser, 2)
+
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on her list
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
+        take_screen_shot(self.browser, 3)
+        dump_html(self.browser, 3)
+
         # Satisfied, she goes back to sleep
 
     def test_muliple_users_can_start_lists_at_different_urls(self):
         # Edith starts a new to-do list
         self.browser.get(self.live_server_url)
+
+        take_screen_shot(self.browser, 4)
+        dump_html(self.browser, 4)
+
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy peacock feathers')
+
+        take_screen_shot(self.browser, 5)
+        dump_html(self.browser, 5)
+
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
+
+        take_screen_shot(self.browser, 6)
+        dump_html(self.browser, 6)
 
         # She notices that her list has a unique URL
         edith_list_url = self.browser.current_url
@@ -123,6 +146,10 @@ class NewVisitorTest(LiveServerTestCase):
         # Francis visits the home page.  There is no sign of Edith's
         # list
         self.browser.get(self.live_server_url)
+
+        take_screen_shot(self.browser, 7)
+        dump_html(self.browser, 7)
+
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
@@ -131,8 +158,15 @@ class NewVisitorTest(LiveServerTestCase):
         # is less interesting than Edith...
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
+
+        take_screen_shot(self.browser, 8)
+        dump_html(self.browser, 8)
+
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy milk')
+
+        take_screen_shot(self.browser, 9)
+        dump_html(self.browser, 9)
 
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
