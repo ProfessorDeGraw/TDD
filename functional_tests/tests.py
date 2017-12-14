@@ -2,7 +2,7 @@ from os.path import basename, dirname, exists
 from os import makedirs
 
 from pyvirtualdisplay import Display
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
@@ -27,7 +27,7 @@ def dump_html(headless_browser, number):
         f.write(headless_browser.page_source)
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.display = Display(visible=0, size=(1024, 768))
