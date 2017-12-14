@@ -1,0 +1,33 @@
+{
+  "name": "gtdd",
+  "version": "1.0.0",
+  "description": "TDD",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProfessorDeGraw/TDD.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProfessorDeGraw/TDD/issues"
+  },
+  "homepage": "https://github.com/ProfessorDeGraw/TDD#readme",
+  "devDependencies": {
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
