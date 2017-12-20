@@ -1,5 +1,6 @@
 from os.path import basename, dirname, exists
 from os import makedirs
+import os
 
 from pyvirtualdisplay import Display
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -35,6 +36,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         self.set_up_browser()
 
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
+
         # How to run in command window
         # > Xvfb :99 -ac -screen 0 1280x1024x24 &
         # > export DISPLAY=:99
@@ -44,7 +49,6 @@ class NewVisitorTest(StaticLiveServerTestCase):
         options = webdriver.ChromeOptions()
         options.add_argument("--no-sandbox")
         # options.binary_location = "/usr/bin/google-chrome"
-        print('set up driver')
         self.browser = webdriver.Chrome(chrome_options=options)
         # self.browser = webdriver.Firefox()
         self.browser.set_window_size(1024, 768)

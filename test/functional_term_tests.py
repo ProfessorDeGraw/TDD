@@ -30,10 +30,8 @@ display.start()
 options = webdriver.ChromeOptions()
 options.add_argument("--no-sandbox")
 # options.binary_location = "/usr/bin/google-chrome"
-print('set up driver')
 browser = webdriver.Chrome(chrome_options=options)
 # driver= webdriver.Firefox()
-print('staring driver')
 
 browser.set_window_size(1024, 768)
 
