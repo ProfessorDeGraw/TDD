@@ -78,6 +78,7 @@ RUN echo "exec /usr/sbin/sshd -D &" >> services.sh
 RUN echo "nginx &" >> services.sh
 RUN echo "cd /sites/$SITENAME/source" >> services.sh
 RUN echo "/sites/$SITENAME/virtualenv/tdd36/bin/pip install -r requirements.txt" >> services.sh
+RUN echo "/sites/$SITENAME/virtualenv/tdd36/bin/python manage.py migrate --noinput" >> services.sh
 RUN echo "/sites/$SITENAME/virtualenv/tdd36/bin/python manage.py runserver" >> services.sh
 
 CMD ["sh", "./services.sh"]
