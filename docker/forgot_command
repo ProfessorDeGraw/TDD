@@ -1,1 +1,4 @@
 docker build -t tdd .
+docker rm -f tdd
+docker run -d -p 2222:22 -p 8080:80 -p 8081:8000 -v /Users/nddegraw/.ssh:/root/.ssh --name tdd tdd
+docker images -q |xargs docker rmi
