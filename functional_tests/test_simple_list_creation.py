@@ -32,7 +32,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('To-Do', self.browser.title, "Is the server running? try:\npython manage.py runserver")
 
         # She is invited to enter a to-do item straight away
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
@@ -52,7 +52,7 @@ class NewVisitorTest(FunctionalTest):
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very
         # methodical)
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Use peacock feathers to make a fly')
 
         self.test_debug_show()
@@ -73,7 +73,7 @@ class NewVisitorTest(FunctionalTest):
 
         self.test_debug_show()
 
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Buy peacock feathers')
 
         self.test_debug_show()
@@ -105,7 +105,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Francis starts a new list by entering a new item. He
         # is less interesting than Edith...
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Buy milk')
 
         self.test_debug_show()

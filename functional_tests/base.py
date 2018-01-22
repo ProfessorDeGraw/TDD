@@ -88,3 +88,6 @@ class FunctionalTest(StaticLiveServerTestCase):
     def dump_html(self, number):
         with open(self.build_file_name(__file__, '.html', number), 'w') as f:
             f.write(self.browser.page_source)
+
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('id_text')
